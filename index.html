@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Interview Evaluator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <div class="logo">
+            AI Interview Evaluator
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="#">
+                Home
+            </a>
+
+            <a href="#">
+                About
+            </a>
+
+            <a href="#">
+                Features
+            </a>
+
+            <!-- Dashboard -->
+            <a href="{{ url_for('dashboard') }}">
+                📊 Dashboard
+            </a>
+
+            <!-- Interview History -->
+            <a href="{{ url_for('history') }}">
+                🕘 History
+            </a>
+
+            <a href="{{ url_for('login') }}"
+               class="login-btn">
+                Login
+            </a>
+
+            <a href="{{ url_for('register') }}"
+               class="register-btn">
+                Register
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <main class="hero">
+
+
+        <div class="hero-content">
+
+
+            <div class="badge">
+                AI-Powered Interview Platform
+            </div>
+
+
+            <h1>
+
+                Prepare Smarter.<br>
+
+                <span>
+                    Interview Better.
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                Practice interviews with an intelligent AI evaluator,
+                receive personalized feedback, identify your weak areas,
+                and improve your interview performance.
+
+            </p>
+
+
+            <div class="buttons">
+
+                <a href="{{ url_for('interview') }}"
+                   class="primary-btn">
+
+                    Start Interview
+
+                </a>
+
+
+                <button class="secondary-btn">
+
+                    Learn More
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="hero-card">
+
+
+            <div class="card-header">
+
+                <span>
+                    Interview Performance
+                </span>
+
+                <span class="status">
+                    AI Analysis
+                </span>
+
+            </div>
+
+
+            <div class="score">
+
+                <strong>
+                    82
+                </strong>
+
+                <span>
+                    /100
+                </span>
+
+            </div>
+
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+
+            <div class="stats">
+
+
+                <div>
+
+                    <span>
+                        Technical
+                    </span>
+
+                    <strong>
+                        86%
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Communication
+                    </span>
+
+                    <strong>
+                        78%
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Relevance
+                    </span>
+
+                    <strong>
+                        84%
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="feedback">
+
+                <strong>
+                    AI Feedback
+                </strong>
+
+                <p>
+
+                    Good understanding of the concept.
+                    Try adding a practical example to make
+                    your answer stronger.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FEATURES SECTION
+    ====================================================== -->
+
+    <section class="features">
+
+
+        <h2>
+            Everything You Need to Improve
+        </h2>
+
+
+        <p class="section-text">
+
+            An intelligent platform designed to help you
+            prepare for real-world interviews.
+
+        </p>
+
+
+        <div class="feature-container">
+
+
+            <!-- FEATURE 1 -->
+
+            <div class="feature-card">
+
+                <div class="icon">
+                    🤖
+                </div>
+
+                <h3>
+                    AI-Powered Evaluation
+                </h3>
+
+                <p>
+
+                    Get intelligent evaluation of your interview
+                    answers using Gemini AI with detailed
+                    performance feedback.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- FEATURE 2 -->
+
+            <div class="feature-card">
+
+                <div class="icon">
+                    ❓
+                </div>
+
+                <h3>
+                    Dynamic Questions
+                </h3>
+
+                <p>
+
+                    Receive dynamically generated interview
+                    questions based on your selected job role
+                    and technical requirements.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- FEATURE 3 -->
+
+            <div class="feature-card">
+
+                <div class="icon">
+                    📊
+                </div>
+
+                <h3>
+                    Performance Analytics
+                </h3>
+
+                <p>
+
+                    Analyze your technical knowledge, relevance,
+                    clarity, completeness and overall performance.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- FEATURE 4 -->
+
+            <div class="feature-card">
+
+                <div class="icon">
+                    📋
+                </div>
+
+                <h3>
+                    Interview History
+                </h3>
+
+                <p>
+
+                    Store your completed interviews and review
+                    your previous scores and feedback anytime.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- FEATURE 5 -->
+
+            <div class="feature-card">
+
+                <div class="icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Personalized Feedback
+                </h3>
+
+                <p>
+
+                    Identify your strengths and weaknesses and
+                    receive AI-generated suggestions for improvement.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- FEATURE 6 -->
+
+            <div class="feature-card">
+
+                <div class="icon">
+                    📈
+                </div>
+
+                <h3>
+                    Performance Dashboard
+                </h3>
+
+                <p>
+
+                    Track your average score, best performance,
+                    completed interviews and progress over time.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+</body>
+
+</html>

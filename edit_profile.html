@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile | AI Interview Evaluator</title>
+
+    <style>
+        /* ================================
+           RESET
+        ================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ================================
+           BODY
+        ================================= */
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #dbeafe, transparent 35%),
+                radial-gradient(circle at bottom right, #ede9fe, transparent 35%),
+                #f8fafc;
+            color: #1e293b;
+        }
+
+        /* ================================
+           NAVBAR
+        ================================= */
+        .navbar {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 21px;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed
+            );
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .logout {
+            color: #dc2626 !important;
+        }
+
+        /* ================================
+           MAIN
+        ================================= */
+        .main {
+            min-height: calc(100vh - 70px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 50px 20px;
+        }
+
+        /* ================================
+           CARD
+        ================================= */
+        .profile-card {
+            width: 100%;
+            max-width: 620px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 20px 60px rgba(15, 23, 42, 0.10);
+
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================================
+           HEADER
+        ================================= */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .avatar {
+            width: 88px;
+            height: 88px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            font-size: 32px;
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 10px 25px rgba(79, 70, 229, 0.28);
+        }
+
+        .profile-header h1 {
+            font-size: 28px;
+            color: #0f172a;
+            margin-bottom: 7px;
+        }
+
+        .profile-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ================================
+           ERROR MESSAGE
+        ================================= */
+        .error-message {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            background: #fef2f2;
+            color: #b91c1c;
+
+            border: 1px solid #fecaca;
+
+            padding: 13px 15px;
+
+            border-radius: 12px;
+
+            margin-bottom: 22px;
+
+            font-size: 14px;
+        }
+
+        .error-icon {
+            width: 25px;
+            height: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #fee2e2;
+            font-weight: bold;
+        }
+
+        /* ================================
+           FORM
+        ================================= */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 9px;
+
+            font-size: 14px;
+            font-weight: 650;
+
+            color: #334155;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 17px;
+            color: #64748b;
+        }
+
+        .form-control {
+            width: 100%;
+
+            padding: 14px 15px 14px 45px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            color: #0f172a;
+
+            background: #ffffff;
+
+            transition: all 0.2s ease;
+        }
+
+        .form-control:hover {
+            border-color: #94a3b8;
+        }
+
+        .form-control:focus {
+            border-color: #6366f1;
+
+            box-shadow:
+                0 0 0 4px rgba(99, 102, 241, 0.10);
+        }
+
+        /* ================================
+           INFORMATION BOX
+        ================================= */
+        .info-box {
+            display: flex;
+            gap: 12px;
+
+            padding: 15px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            margin-top: 5px;
+            margin-bottom: 28px;
+        }
+
+        .info-icon {
+            min-width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #eef2ff;
+            color: #4f46e5;
+
+            font-weight: bold;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #64748b;
+        }
+
+        /* ================================
+           BUTTONS
+        ================================= */
+        .buttons {
+            display: flex;
+            gap: 13px;
+        }
+
+        .btn {
+            flex: 1;
+
+            height: 48px;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 650;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+        }
+
+        .btn-cancel {
+            background: #f8fafc;
+            color: #475569;
+
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-cancel:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .btn-save {
+            border: none;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 8px 20px rgba(79, 70, 229, 0.22);
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px rgba(79, 70, 229, 0.30);
+        }
+
+        /* ================================
+           FOOTER
+        ================================= */
+        .back-link {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 24px;
+
+            color: #4f46e5;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .profile-card {
+                padding: 28px 22px;
+                border-radius: 20px;
+            }
+
+            .profile-header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .navbar {
+                height: auto;
+                padding: 15px 18px;
+
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .main {
+                padding: 25px 15px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================================
+         NAVBAR
+    ================================= -->
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                AI
+            </div>
+
+            AI Interview Evaluator
+
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================================
+         MAIN CONTENT
+    ================================= -->
+    <main class="main">
+
+        <div class="profile-card">
+
+            <!-- HEADER -->
+
+            <div class="profile-header">
+
+                <div class="avatar">
+
+                    {% if user.name %}
+                        {{ user.name[0]|upper }}
+                    {% else %}
+                        U
+                    {% endif %}
+
+                </div>
+
+                <h1>
+                    Edit Your Profile
+                </h1>
+
+                <p>
+                    Keep your personal information up to date
+                </p>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            {% if error %}
+
+                <div class="error-message">
+
+                    <div class="error-icon">
+                        !
+                    </div>
+
+                    <span>
+                        {{ error }}
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- FORM -->
+
+            <form
+                method="POST"
+                action="{{ url_for('edit_profile') }}"
+            >
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-control"
+                            value="{{ user.name or '' }}"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            value="{{ user.email or '' }}"
+                            placeholder="Enter your email address"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- INFO -->
+
+                <div class="info-box">
+
+                    <div class="info-icon">
+                        i
+                    </div>
+
+                    <p>
+                        Your name and email address are used
+                        to personalize your AI interview experience
+                        and maintain your interview history.
+                    </p>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+                    <a
+                        href="{{ url_for('dashboard') }}"
+                        class="btn btn-cancel"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-save"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- BACK LINK -->
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="back-link"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

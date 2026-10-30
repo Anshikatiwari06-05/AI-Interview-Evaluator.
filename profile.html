@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Profile - AI Interview Evaluator</title>
+
+
+    <!-- =====================================================
+         INTERNAL CSS
+    ====================================================== -->
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f8fafc
+                );
+
+            color: #1e293b;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ====================================================== */
+
+        .navbar {
+
+            height: 72px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 45px;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 4px 20px
+                rgba(0, 0, 0, 0.08);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+        }
+
+
+        .navbar-brand {
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            color: #4f46e5;
+
+            white-space: nowrap;
+        }
+
+
+        .navbar-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 28px;
+        }
+
+
+        .navbar-links a {
+
+            text-decoration: none;
+
+            color: #475569;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            padding: 9px 4px;
+
+            transition: 0.3s;
+        }
+
+
+        .navbar-links a:hover {
+
+            color: #4f46e5;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================================
+           MAIN PROFILE AREA
+        ====================================================== */
+
+        .profile-container {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 55px 25px 70px;
+        }
+
+
+        /* =====================================================
+           PROFILE HEADER
+        ====================================================== */
+
+        .profile-heading {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+
+        .profile-heading h1 {
+
+            font-size: 34px;
+
+            margin-bottom: 10px;
+
+            color: #1e293b;
+        }
+
+
+        .profile-heading p {
+
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           PROFILE CARD
+        ====================================================== */
+
+        .profile-card {
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 15px 45px
+                rgba(15, 23, 42, 0.10);
+
+            max-width: 850px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           PROFILE TOP
+        ====================================================== */
+
+        .profile-top {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 28px;
+
+            padding-bottom: 30px;
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+
+        .profile-avatar {
+
+            width: 105px;
+
+            height: 105px;
+
+            min-width: 105px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 50px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #8b5cf6
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(79, 70, 229, 0.25);
+        }
+
+
+        .profile-user h2 {
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+
+            color: #1e293b;
+        }
+
+
+        .profile-user p {
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .profile-badge {
+
+            display: inline-block;
+
+            padding: 6px 13px;
+
+            border-radius: 20px;
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           INFORMATION SECTION
+        ====================================================== */
+
+        .section-title {
+
+            margin-top: 32px;
+
+            margin-bottom: 18px;
+
+            font-size: 20px;
+
+            color: #1e293b;
+        }
+
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .info-box {
+
+            padding: 20px;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 15px;
+
+            background: #f8fafc;
+
+            transition: 0.3s;
+        }
+
+
+        .info-box:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.06);
+        }
+
+
+        .info-label {
+
+            display: block;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+
+            font-weight: 600;
+        }
+
+
+        .info-value {
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            color: #1e293b;
+
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ====================================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+
+        .stat-box {
+
+            padding: 24px 20px;
+
+            text-align: center;
+
+            border-radius: 17px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            transition: 0.3s;
+        }
+
+
+        .stat-box:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .stat-icon {
+
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .stat-value {
+
+            display: block;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            color: #4f46e5;
+
+            margin-bottom: 5px;
+        }
+
+
+        .stat-label {
+
+            font-size: 13px;
+
+            color: #64748b;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           ACTION BUTTONS
+        ====================================================== */
+
+        .profile-actions {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            margin-top: 35px;
+
+            padding-top: 30px;
+
+            border-top: 1px solid #e2e8f0;
+        }
+
+
+        .action-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 13px 23px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.3s;
+        }
+
+
+        .primary-button {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px
+                rgba(79, 70, 229, 0.22);
+        }
+
+
+        .primary-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(79, 70, 229, 0.30);
+        }
+
+
+        .secondary-button {
+
+            background: #f1f5f9;
+
+            color: #475569;
+        }
+
+
+        .secondary-button:hover {
+
+            background: #e2e8f0;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE DESIGN
+        ====================================================== */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+
+                padding: 0 20px;
+            }
+
+
+            .navbar-links {
+
+                gap: 14px;
+            }
+
+
+            .navbar-links a {
+
+                font-size: 13px;
+            }
+
+
+            .profile-card {
+
+                padding: 28px 22px;
+            }
+
+
+            .info-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .stats-grid {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                height: auto;
+
+                padding: 18px;
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            .navbar-links {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+                gap: 10px 18px;
+            }
+
+
+            .profile-container {
+
+                padding-top: 35px;
+            }
+
+
+            .profile-heading h1 {
+
+                font-size: 27px;
+            }
+
+
+            .profile-top {
+
+                flex-direction: column;
+
+                text-align: center;
+            }
+
+
+            .profile-user h2 {
+
+                font-size: 24px;
+            }
+
+
+            .profile-actions {
+
+                flex-direction: column;
+            }
+
+
+            .action-button {
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="navbar-brand">
+            🤖 AI Interview Evaluator
+        </div>
+
+
+        <div class="navbar-links">
+
+            <a href="{{ url_for('home') }}">
+                🏠 Home
+            </a>
+
+            <a href="{{ url_for('interview') }}">
+                🎤 Interview
+            </a>
+
+            <a href="{{ url_for('dashboard') }}">
+                📊 Dashboard
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                📜 History
+            </a>
+
+            <a href="{{ url_for('profile') }}">
+                👤 Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         PROFILE
+    ====================================================== -->
+
+    <main class="profile-container">
+
+
+        <div class="profile-heading">
+
+            <h1>
+                👤 My Profile
+            </h1>
+
+            <p>
+                Manage your account and track your interview progress.
+            </p>
+
+        </div>
+
+
+        <div class="profile-card">
+
+
+            <!-- =================================================
+                 USER INFORMATION
+            ================================================== -->
+
+            <div class="profile-top">
+
+                <div class="profile-avatar">
+                    👤
+                </div>
+
+
+                <div class="profile-user">
+
+                    <h2>
+                        {{ user.name }}
+                    </h2>
+
+
+                    <p>
+                        {{ user.email }}
+                    </p>
+
+
+                    <span class="profile-badge">
+                        🎓 Interview Candidate
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACCOUNT INFORMATION
+            ================================================== -->
+
+            <h3 class="section-title">
+                Account Information
+            </h3>
+
+
+            <div class="info-grid">
+
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Full Name
+                    </span>
+
+                    <span class="info-value">
+                        {{ user.name }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Email Address
+                    </span>
+
+                    <span class="info-value">
+                        {{ user.email }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 INTERVIEW STATISTICS
+            ================================================== -->
+
+            <h3 class="section-title">
+                📊 Interview Statistics
+            </h3>
+
+
+            <div class="stats-grid">
+
+
+                <div class="stat-box">
+
+                    <div class="stat-icon">
+                        🎯
+                    </div>
+
+                    <span class="stat-value">
+                        {{ total_interviews }}
+                    </span>
+
+                    <span class="stat-label">
+                        Total Interviews
+                    </span>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <div class="stat-icon">
+                        ⭐
+                    </div>
+
+                    <span class="stat-value">
+                        {{ average_score }}/10
+                    </span>
+
+                    <span class="stat-label">
+                        Average Score
+                    </span>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <div class="stat-icon">
+                        🏆
+                    </div>
+
+                    <span class="stat-value">
+                        {{ best_score }}/10
+                    </span>
+
+                    <span class="stat-label">
+                        Best Score
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
+
+            <div class="profile-actions">
+
+
+                <!-- NEW: EDIT PROFILE -->
+
+                <a href="{{ url_for('edit_profile') }}"
+                   class="action-button primary-button">
+
+                    ✏️ Edit Profile
+
+                </a>
+
+
+                <a href="{{ url_for('interview') }}"
+                   class="action-button primary-button">
+
+                    🚀 Start New Interview
+
+                </a>
+
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="action-button secondary-button">
+
+                    📊 View Dashboard
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

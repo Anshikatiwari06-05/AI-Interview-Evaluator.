@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - AI Interview Evaluator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        /* =========================================================
+           NAVBAR LINKS SPACING
+        ========================================================= */
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="navbar-brand">
+            🤖 AI Interview Evaluator
+        </div>
+
+
+        <div class="navbar-links">
+
+            <a href="{{ url_for('home') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('interview') }}">
+                Interview
+            </a>
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
+
+            <a href="{{ url_for('profile') }}">
+                👤 Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
+
+    <main class="dashboard-container">
+
+        <div class="dashboard-header">
+
+            <h1>
+                📊 Interview Dashboard
+            </h1>
+
+            <p>
+                Track your interview performance and improvement.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
+        <div class="dashboard-stats">
+
+
+            <!-- TOTAL INTERVIEWS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🎯
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Interviews
+                    </span>
+
+                    <h2>
+                        {{ total_interviews }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- AVERAGE SCORE -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ⭐
+                </div>
+
+                <div>
+
+                    <span>
+                        Average Score
+                    </span>
+
+                    <h2>
+                        {{ average_score }}/10
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- BEST SCORE -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🏆
+                </div>
+
+                <div>
+
+                    <span>
+                        Best Score
+                    </span>
+
+                    <h2>
+                        {{ best_score }}/10
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- AVERAGE PERCENTAGE -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📈
+                </div>
+
+                <div>
+
+                    <span>
+                        Average Percentage
+                    </span>
+
+                    <h2>
+                        {{ average_percentage }}%
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             PERFORMANCE CHART
+        ========================== -->
+
+        <div class="dashboard-card chart-card">
+
+            <div class="dashboard-card-header">
+
+                <h2>
+                    📈 Performance Trend
+                </h2>
+
+                <span>
+                    Last 10 Interviews
+                </span>
+
+            </div>
+
+
+            {% if total_interviews > 0 %}
+
+                <div class="chart-wrapper">
+
+                    <canvas id="performanceChart"></canvas>
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-dashboard">
+
+                    <div class="empty-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        No Performance Data Yet
+                    </h3>
+
+                    <p>
+                        Complete your first interview to see
+                        your performance chart.
+                    </p>
+
+                    <a href="{{ url_for('interview') }}"
+                       class="history-button">
+
+                        Start Interview
+
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =========================
+             RECENT INTERVIEWS
+        ========================== -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-card-header">
+
+                <h2>
+                    📝 Recent Interviews
+                </h2>
+
+                <a href="{{ url_for('history') }}">
+                    View All
+                </a>
+
+            </div>
+
+
+            {% if recent_interviews %}
+
+                <div class="recent-interviews">
+
+                    {% for interview in recent_interviews %}
+
+                        <div class="recent-interview-item">
+
+
+                            <div class="recent-info">
+
+                                <h3>
+                                    {{ interview.role }}
+                                </h3>
+
+                                <p>
+
+                                    {% if interview.created_at %}
+
+                                        {{ interview.created_at.strftime(
+                                            '%d %b %Y, %I:%M %p'
+                                        ) }}
+
+                                    {% endif %}
+
+                                </p>
+
+                            </div>
+
+
+                            <div class="recent-score">
+
+                                <strong>
+                                    {{ interview.final_score }}/10
+                                </strong>
+
+                                <span>
+                                    {{ interview.percentage }}%
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-dashboard">
+
+                    <div class="empty-icon">
+                        📭
+                    </div>
+
+                    <h3>
+                        No Interviews Yet
+                    </h3>
+
+                    <p>
+                        Start your first AI interview.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =========================
+             START INTERVIEW
+        ========================== -->
+
+        <div class="dashboard-action">
+
+            <a href="{{ url_for('interview') }}"
+               class="start-interview-button">
+
+                🚀 Start New Interview
+
+            </a>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =========================
+         CHART JAVASCRIPT
+    ========================== -->
+
+    {% if total_interviews > 0 %}
+
+    <script>
+
+        const chartLabels =
+            {{ chart_labels | safe }};
+
+
+        const chartScores =
+            {{ chart_scores | safe }};
+
+
+        const ctx =
+            document
+                .getElementById(
+                    "performanceChart"
+                )
+                .getContext("2d");
+
+
+        new Chart(
+            ctx,
+            {
+
+                type: "line",
+
+                data: {
+
+                    labels: chartLabels,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Interview Score",
+
+                            data:
+                                chartScores,
+
+                            tension: 0.3,
+
+                            fill: false,
+
+                            borderWidth: 3,
+
+                            pointRadius: 5
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            max: 10,
+
+                            title: {
+
+                                display: true,
+
+                                text:
+                                    "Score / 10"
+
+                            }
+
+                        },
+
+                        x: {
+
+                            title: {
+
+                                display: true,
+
+                                text:
+                                    "Interview Date"
+
+                            }
+
+                        }
+
+                    },
+
+
+                    plugins: {
+
+                        legend: {
+
+                            display: true
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+    </script>
+
+    {% endif %}
+
+
+</body>
+
+</html>

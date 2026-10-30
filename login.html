@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | AI Interview Evaluator</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(81,70,229,0.13), transparent 30%),
+                radial-gradient(circle at 90% 85%, rgba(99,102,241,0.10), transparent 30%),
+                #f7f8fc;
+            color: #202938;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 76px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.92);
+            border-bottom: 1px solid #e9eaf0;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+            color: #202938;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #5146e5;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            color: #4b5567;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .home-btn:hover {
+            color: #5146e5;
+            background: #f0efff;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page {
+            min-height: calc(100vh - 76px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 45px 20px;
+        }
+
+        .login-card {
+            width: 960px;
+            max-width: 100%;
+            min-height: 570px;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            box-shadow: 0 25px 70px rgba(31,41,55,0.12);
+        }
+
+        /* ================= LEFT ================= */
+
+        .left-panel {
+            position: relative;
+            overflow: hidden;
+            padding: 55px 45px;
+            color: white;
+
+            background:
+                radial-gradient(circle at 85% 15%,
+                rgba(255,255,255,0.20),
+                transparent 20%),
+                radial-gradient(circle at 10% 90%,
+                rgba(255,255,255,0.12),
+                transparent 25%),
+                linear-gradient(145deg,
+                #5146e5,
+                #4338ca 60%,
+                #3730a3);
+        }
+
+        .circle-one {
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.12);
+            right: -75px;
+            top: 70px;
+        }
+
+        .circle-two {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.10);
+            left: -145px;
+            bottom: -120px;
+        }
+
+        .left-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 13px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.13);
+            border: 1px solid rgba(255,255,255,0.18);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 28px;
+        }
+
+        .tag-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #9ff0b5;
+        }
+
+        .left-panel h1 {
+            font-size: 38px;
+            line-height: 1.15;
+            letter-spacing: -1.3px;
+            margin-bottom: 18px;
+        }
+
+        .left-panel h1 span {
+            color: #c7c3ff;
+        }
+
+        .left-panel p {
+            color: rgba(255,255,255,0.78);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .stat {
+            padding: 14px 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.12);
+            text-align: center;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .stat span {
+            font-size: 10px;
+            color: rgba(255,255,255,0.65);
+        }
+
+        /* ================= RIGHT ================= */
+
+        .right-panel {
+            padding: 50px 58px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-top {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-top h2 {
+            font-size: 29px;
+            letter-spacing: -0.7px;
+            margin-bottom: 8px;
+        }
+
+        .form-top p {
+            color: #7a8292;
+            font-size: 13px;
+        }
+
+        /* ================= ERROR ================= */
+
+        .error {
+            padding: 12px 14px;
+            border-radius: 9px;
+            background: #fff1f1;
+            border: 1px solid #ffd4d4;
+            color: #d63636;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        /* ================= OAUTH ================= */
+
+        .social-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .social-btn {
+            height: 45px;
+            border: 1px solid #e0e3ea;
+            background: #fff;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #30394b;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .social-btn:hover {
+            border-color: #c9cce5;
+            background: #fafaff;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(30,40,70,0.07);
+        }
+
+        .social-icon {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .google {
+            color: #202124;
+        }
+
+        .facebook {
+            color: #1877f2;
+        }
+
+        .github {
+            color: #171717;
+        }
+
+        /* ================= DIVIDER ================= */
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #a0a5ae;
+            font-size: 11px;
+            margin: 4px 0 22px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: #e8e9ee;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #354052;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9aa1af;
+            font-size: 15px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 48px;
+            border: 1px solid #e0e3ea;
+            border-radius: 10px;
+            background: #fafbfc;
+            padding: 0 14px 0 42px;
+            outline: none;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            background: white;
+            border-color: #5146e5;
+            box-shadow: 0 0 0 3px rgba(81,70,229,0.09);
+        }
+
+        /* ================= FORGOT ================= */
+
+        .form-options {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -7px;
+            margin-bottom: 18px;
+        }
+
+        .forgot {
+            font-size: 11px;
+            color: #5146e5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-submit {
+            width: 100%;
+            height: 49px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #5146e5, #6366f1);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(81,70,229,0.20);
+            transition: 0.25s;
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(81,70,229,0.28);
+        }
+
+        /* ================= REGISTER ================= */
+
+        .register-text {
+            text-align: center;
+            color: #858b98;
+            font-size: 12px;
+            margin-top: 22px;
+        }
+
+        .register-text a {
+            color: #5146e5;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .login-card {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .left-panel {
+                display: none;
+            }
+
+            .right-panel {
+                padding: 45px 35px;
+            }
+
+            .navbar {
+                padding: 0 25px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .right-panel {
+                padding: 35px 24px;
+            }
+
+            .social-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .social-btn {
+                justify-content: center;
+            }
+
+            .form-top h2 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            AI Interview <span>Evaluator</span>
+        </div>
+
+        <a href="{{ url_for('home') }}" class="home-btn">
+            Home
+        </a>
+
+    </nav>
+
+
+    <!-- LOGIN PAGE -->
+
+    <main class="page">
+
+        <div class="login-card">
+
+            <!-- LEFT PANEL -->
+
+            <section class="left-panel">
+
+                <div class="circle-one"></div>
+                <div class="circle-two"></div>
+
+                <div class="left-content">
+
+                    <div class="tag">
+                        <span class="tag-dot"></span>
+                        AI-Powered Interview Platform
+                    </div>
+
+                    <h1>
+                        Welcome<br>
+                        <span>back!</span>
+                    </h1>
+
+                    <p>
+                        Continue your interview preparation journey
+                        and improve your performance with intelligent
+                        AI-powered feedback.
+                    </p>
+
+
+                    <div class="stats">
+
+                        <div class="stat">
+                            <strong>AI</strong>
+                            <span>Evaluation</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>24/7</strong>
+                            <span>Practice</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>100%</strong>
+                            <span>Personalized</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RIGHT PANEL -->
+
+            <section class="right-panel">
+
+                <div class="form-top">
+
+                    <h2>
+                        Welcome back
+                    </h2>
+
+                    <p>
+                        Login to continue to your account
+                    </p>
+
+                </div>
+
+
+                {% if error %}
+
+                <div class="error">
+                    {{ error }}
+                </div>
+
+                {% endif %}
+
+
+                <!-- SOCIAL LOGIN -->
+
+                <div class="social-buttons">
+
+                    <!-- Google -->
+
+                    <a href="{{ url_for('google_login') }}"
+                       class="social-btn google">
+
+                        <span class="social-icon">G</span>
+                        Google
+
+                    </a>
+
+
+                    <!-- Facebook -->
+
+                    <a href="{{ url_for('facebook_login') }}"
+                       class="social-btn facebook">
+
+                        <span class="social-icon">f</span>
+                        Facebook
+
+                    </a>
+
+
+                    <!-- GitHub -->
+
+                    <a href="{{ url_for('github_login') }}"
+                       class="social-btn github">
+
+                        <span class="social-icon">●</span>
+                        GitHub
+
+                    </a>
+
+                </div>
+
+
+                <div class="divider">
+                    OR CONTINUE WITH EMAIL
+                </div>
+
+
+                <!-- EMAIL LOGIN -->
+
+                <form method="POST"
+                      action="{{ url_for('login') }}">
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            EMAIL ADDRESS
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            PASSWORD
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-options">
+
+                        <a href="#" class="forgot">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <button type="submit" class="login-submit">
+                        Login to Account →
+                    </button>
+
+                </form>
+
+
+                <div class="register-text">
+
+                    Don't have an account?
+
+                    <a href="{{ url_for('register') }}">
+                        Create Account
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

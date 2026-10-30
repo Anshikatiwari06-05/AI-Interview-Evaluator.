@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Interview History | AI Interview Evaluator</title>
+
+
+    <!-- =====================================================
+         INTERNAL CSS
+    ====================================================== -->
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background: #f5f7fb;
+
+            color: #1f2937;
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ====================================================== */
+
+        .navbar {
+
+            height: 70px;
+
+            padding: 0 7%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #e7eaf0;
+
+            box-shadow:
+                0 3px 15px rgba(0, 0, 0, 0.04);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+        }
+
+
+        .logo {
+
+            font-size: 19px;
+
+            font-weight: 700;
+
+            color: #202938;
+
+            white-space: nowrap;
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 24px;
+        }
+
+
+        .nav-links a {
+
+            text-decoration: none;
+
+            color: #4b5563;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: 0.2s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            color: #5b5bd6;
+        }
+
+
+        .nav-links a.active {
+
+            color: #5b5bd6;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           MAIN PAGE
+        ====================================================== */
+
+        .history-page {
+
+            min-height: calc(100vh - 70px);
+
+            padding: 55px 7% 70px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8faff 0%,
+                    #eef2ff 100%
+                );
+        }
+
+
+        .history-container {
+
+            max-width: 1100px;
+
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ====================================================== */
+
+        .history-header {
+
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+
+        .history-icon {
+
+            width: 76px;
+
+            height: 76px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 20px;
+
+            font-size: 38px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            box-shadow:
+                0 15px 35px
+                rgba(102, 126, 234, 0.25);
+        }
+
+
+        .history-header h1 {
+
+            font-size: 43px;
+
+            font-weight: 800;
+
+            color: #182235;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .history-header p {
+
+            font-size: 16px;
+
+            color: #6b7280;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           INTERVIEW CARD
+        ====================================================== */
+
+        .history-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e5e9f2;
+
+            border-radius: 22px;
+
+            padding: 28px;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(30, 50, 90, 0.07);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .history-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(30, 50, 90, 0.12);
+        }
+
+
+        /* =====================================================
+           CARD HEADER
+        ====================================================== */
+
+        .card-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            padding-bottom: 23px;
+
+            border-bottom: 1px solid #edf0f5;
+        }
+
+
+        .role-section {
+
+            flex: 1;
+        }
+
+
+        .interview-number {
+
+            display: inline-block;
+
+            padding: 5px 12px;
+
+            margin-bottom: 10px;
+
+            border-radius: 20px;
+
+            background: #eef2ff;
+
+            color: #5965d8;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .role-section h2 {
+
+            font-size: 25px;
+
+            color: #1e293b;
+
+            margin-bottom: 8px;
+        }
+
+
+        .date {
+
+            font-size: 14px;
+
+            color: #7b8495;
+        }
+
+
+        /* =====================================================
+           SCORE BOX
+        ====================================================== */
+
+        .score-box {
+
+            min-width: 145px;
+
+            padding: 18px 20px;
+
+            text-align: center;
+
+            border-radius: 18px;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(102, 126, 234, 0.25);
+        }
+
+
+        .score-number {
+
+            font-size: 32px;
+
+            font-weight: 800;
+
+            line-height: 1.1;
+        }
+
+
+        .score-label {
+
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 12px;
+
+            opacity: 0.9;
+        }
+
+
+        /* =====================================================
+           STAT BOXES
+        ====================================================== */
+
+        .stats-row {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+
+            margin: 25px 0;
+        }
+
+
+        .stat-box {
+
+            padding: 18px 20px;
+
+            background: #f8faff;
+
+            border: 1px solid #e9edf5;
+
+            border-radius: 15px;
+        }
+
+
+        .stat-title {
+
+            display: block;
+
+            color: #7a8496;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .stat-value {
+
+            font-size: 21px;
+
+            font-weight: 750;
+
+            color: #202938;
+        }
+
+
+        /* =====================================================
+           PROGRESS BAR
+        ====================================================== */
+
+        .progress-section {
+
+            margin-bottom: 28px;
+        }
+
+
+        .progress-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 9px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #4b5563;
+        }
+
+
+        .progress-track {
+
+            width: 100%;
+
+            height: 10px;
+
+            background: #e7ebf3;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .progress-fill {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            transition: width 0.8s ease;
+        }
+
+
+        /* =====================================================
+           FEEDBACK GRID
+        ====================================================== */
+
+        .feedback-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .feedback-box {
+
+            padding: 21px;
+
+            border-radius: 17px;
+
+            background: #ffffff;
+
+            border: 1px solid #e7ebf2;
+
+            min-height: 160px;
+        }
+
+
+        .feedback-box h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 15px;
+
+            color: #263044;
+        }
+
+
+        .feedback-box ul {
+
+            padding-left: 19px;
+        }
+
+
+        .feedback-box li {
+
+            color: #667085;
+
+            font-size: 14px;
+
+            line-height: 1.55;
+
+            margin-bottom: 9px;
+        }
+
+
+        .feedback-box p {
+
+            color: #667085;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           FEEDBACK COLORS
+        ====================================================== */
+
+        .strengths {
+
+            border-top: 4px solid #22c55e;
+        }
+
+
+        .weaknesses {
+
+            border-top: 4px solid #f59e0b;
+        }
+
+
+        .suggestions {
+
+            border-top: 4px solid #6366f1;
+        }
+
+
+        /* =====================================================
+           EMPTY HISTORY
+        ====================================================== */
+
+        .empty-history {
+
+            max-width: 600px;
+
+            margin: 40px auto;
+
+            padding: 55px 30px;
+
+            text-align: center;
+
+            background: #ffffff;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(30, 50, 90, 0.08);
+        }
+
+
+        .empty-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .empty-history h2 {
+
+            font-size: 25px;
+
+            color: #1f2937;
+
+            margin-bottom: 10px;
+        }
+
+
+        .empty-history p {
+
+            color: #7a8496;
+
+            line-height: 1.6;
+
+            margin-bottom: 25px;
+        }
+
+
+        .start-btn {
+
+            display: inline-block;
+
+            padding: 12px 24px;
+
+            border-radius: 10px;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.25s ease;
+        }
+
+
+        .start-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(102, 126, 234, 0.25);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE TABLET
+        ====================================================== */
+
+        @media (max-width: 850px) {
+
+            .navbar {
+
+                padding: 0 4%;
+            }
+
+
+            .nav-links {
+
+                gap: 13px;
+            }
+
+
+            .history-page {
+
+                padding-left: 4%;
+
+                padding-right: 4%;
+            }
+
+
+            .feedback-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .card-top {
+
+                align-items: flex-start;
+            }
+        }
+
+
+        /* =====================================================
+           RESPONSIVE MOBILE
+        ====================================================== */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                height: auto;
+
+                padding: 16px 20px;
+
+                flex-direction: column;
+
+                gap: 14px;
+            }
+
+
+            .nav-links {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+
+            .history-page {
+
+                padding: 35px 18px 50px;
+            }
+
+
+            .history-header h1 {
+
+                font-size: 32px;
+            }
+
+
+            .history-header p {
+
+                font-size: 14px;
+            }
+
+
+            .history-card {
+
+                padding: 20px;
+
+                border-radius: 18px;
+            }
+
+
+            .card-top {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .score-box {
+
+                width: 100%;
+            }
+
+
+            .stats-row {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🤖 AI Interview Evaluator
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+
+        <a href="{{ url_for('interview') }}">
+            Interview
+        </a>
+
+
+        <a href="{{ url_for('history') }}"
+           class="active">
+            🕘 History
+        </a>
+
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN HISTORY PAGE
+====================================================== -->
+
+<main class="history-page">
+
+
+    <div class="history-container">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="history-header">
+
+            <div class="history-icon">
+                📊
+            </div>
+
+
+            <h1>
+                Interview History
+            </h1>
+
+
+            <p>
+                Review your previous AI interview performances
+                and track your progress over time.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CHECK HISTORY
+        ================================================== -->
+
+        {% if interviews %}
+
+
+            {% for interview in interviews %}
+
+
+            <!-- =================================================
+                 INTERVIEW CARD
+            ================================================== -->
+
+            <div class="history-card">
+
+
+                <!-- CARD HEADER -->
+
+                <div class="card-top">
+
+
+                    <div class="role-section">
+
+                        <span class="interview-number">
+                            Interview #{{ loop.index }}
+                        </span>
+
+
+                        <h2>
+                            {{ interview.role }}
+                        </h2>
+
+
+                        <div class="date">
+
+                            📅
+
+                            {{ interview.created_at.strftime('%d %b %Y, %I:%M %p') }}
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SCORE -->
+
+                    <div class="score-box">
+
+                        <div class="score-number">
+                            {{ interview.final_score }}
+                        </div>
+
+                        <span class="score-label">
+                            Final Score / 10
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     STATISTICS
+                ================================================== -->
+
+                <div class="stats-row">
+
+
+                    <div class="stat-box">
+
+                        <span class="stat-title">
+                            Final Score
+                        </span>
+
+                        <span class="stat-value">
+                            {{ interview.final_score }}/10
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-box">
+
+                        <span class="stat-title">
+                            Percentage
+                        </span>
+
+                        <span class="stat-value">
+                            {{ interview.percentage }}%
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PERFORMANCE BAR
+                ================================================== -->
+
+                <div class="progress-section">
+
+                    <div class="progress-header">
+
+                        <span>
+                            Overall Performance
+                        </span>
+
+                        <span>
+                            {{ interview.percentage }}%
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-track">
+
+                        <div class="progress-fill"
+                             style="width: {{ interview.percentage }}%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     FEEDBACK
+                ================================================== -->
+
+                <div class="feedback-grid">
+
+
+                    <!-- STRENGTHS -->
+
+                    <div class="feedback-box strengths">
+
+                        <h3>
+                            💪 Strengths
+                        </h3>
+
+
+                        {% if interview.strengths %}
+
+                            <ul>
+
+                                {% for item in interview.strengths %}
+
+                                    <li>
+                                        {{ item }}
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+
+                        {% else %}
+
+                            <p>
+                                No strengths recorded.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- WEAKNESSES -->
+
+                    <div class="feedback-box weaknesses">
+
+                        <h3>
+                            ⚠️ Weaknesses
+                        </h3>
+
+
+                        {% if interview.weaknesses %}
+
+                            <ul>
+
+                                {% for item in interview.weaknesses %}
+
+                                    <li>
+                                        {{ item }}
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+
+                        {% else %}
+
+                            <p>
+                                No weaknesses recorded.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- IMPROVEMENT -->
+
+                    <div class="feedback-box suggestions">
+
+                        <h3>
+                            🚀 Improve Next Time
+                        </h3>
+
+
+                        {% if interview.improvement_suggestions %}
+
+                            <ul>
+
+                                {% for item in interview.improvement_suggestions %}
+
+                                    <li>
+                                        {{ item }}
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+
+                        {% else %}
+
+                            <p>
+                                No suggestions available.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 EMPTY HISTORY
+            ================================================== -->
+
+            <div class="empty-history">
+
+                <div class="empty-icon">
+                    🕘
+                </div>
+
+
+                <h2>
+                    No Interviews Yet
+                </h2>
+
+
+                <p>
+                    Complete your first AI interview and
+                    your performance will appear here.
+                </p>
+
+
+                <a href="{{ url_for('interview') }}"
+                   class="start-btn">
+
+                    Start Your First Interview
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
